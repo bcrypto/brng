@@ -1,0 +1,137 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{_defs}
+
+%%%%%%%%%%%  Format %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\doubt}[1]{{\textcolor{red}{#1}}}
+\newcommand{\addendum}[1]{\textcolor{blue}{#1}}
+\newcommand{\old}[1]{}
+
+\newcommand{\optional}[1]{$\mathbf{\bigl[}$#1$\mathbf{\bigr]}$}
+\newcommand{\mathoptional}[1]{\ensuremath{\mathbf{\bigl[}#1\mathbf{\bigr]}}}
+\newcommand{\implicit}[1]{$\mathbf{\bigl\{}$#1$\mathbf{\bigr\}}$}
+\newcommand{\mathimplicit}[1]{\ensuremath{\mathbf{\bigl\{}#1\mathbf{\bigr\}}}}
+
+\newcommand\algname[1]{\texttt{#1}\xspace}
+\newcommand\hexz[1]{\ensuremath\texttt{#1}}
+\newcommand\hex[1]{\hexz{#1}_{16}}
+
+\newcounter{defctr}
+\setcounter{defctr}{0}
+\renewcommand{\thedefctr}
+{\addtocounter{defctr}{1}\thechapter.\arabic{defctr}}
+
+\def\dhline{\hline\hline}
+\def\ddhline{\hline\multicolumn{\LT@cols}{c}{}\\[-0.75em]\hline}
+
+%%%%%%%%%%% Local Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\btoi[1]{\ensuremath{\lfloor#1\rceil}}
+\newcommand\Btoi[1]{\ensuremath{\left\lfloor#1\right\rceil}}
+\newcommand\itob[1]{\ensuremath{\langle#1\rangle}}
+\newcommand\Itob[1]{\ensuremath{\left\langle#1\right\rangle}}
+
+\providecommand{\HMAC}{\texttt{hmac}\xspace}
+
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\FF}{\mathbb{F}}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Renew %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\le}{\leqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\geq}{\geqslant}
+\providecommand{\No}{\textnumero}
+
+%%%%%%%%%%% Environments %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{note}[subsubsection]
+
+\newenvironment{note*}{
+  \def\thenotename{Примечание~---~}
+  \list{}{\vskip3pt
+    \labelwidth=0pt\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+    \itemsep=0pt\itemindent=0pt\leftmargin=\parindent
+    \labelsep=0pt\small\item[\thenotename]}
+}{\vskip3pt\endlist}
+
+\newenvironment{note}{
+  \def\thenotename{Примечание~\@arabic\c@note~---~}
+  \list{}{\vskip3pt
+   \labelwidth=0pt\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+   \itemsep=0pt\itemindent=0pt\leftmargin=\parindent
+    \refstepcounter{note}
+    \labelsep=0pt\small\item[\thenotename]}
+}{\vskip3pt\endlist}
+
+\newenvironment{notes}{
+  \def\thenotename{Примечания}
+  \list{}{\vskip3pt
+    \labelwidth=0pt\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+    \itemsep=0pt\itemindent=0pt\leftmargin=\parindent
+    \labelsep=0pt\small\item[\thenotename]}\mbox{}\par
+}{\vskip3pt\endlist}
+
+\newcounter{example}[subsubsection]
+
+\newenvironment{example*}{
+ \def\theexamplename{Пример~---~}
+  \list{}{\vskip3pt
+    \labelwidth=0pt\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+    \itemsep=0pt\itemindent=0pt\leftmargin=\parindent
+    \labelsep=0pt\small\bf\itshape\item[\theexamplename]}
+}{\vskip3pt\endlist}
+
+\newenvironment{example}{
+  \def\theexamplename{Пример~\@arabic\c@example~---~}
+  \list{}{\vskip3pt
+    \labelwidth=0pt\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+    \itemsep=0pt\itemindent=0pt\leftmargin=\parindent
+    \refstepcounter{example}
+    \labelsep=0pt\small\bf\itshape\item[\theexamplename]}
+}{\vskip3pt\endlist}
+
+\newenvironment{examples}{
+  \def\theexamplename{Примеры}
+  \list{}{\vskip3pt
+    \labelwidth=0pt\topsep=0pt\partopsep=0pt\parskip=0pt\parsep=0pt
+    \itemsep=0pt\itemindent=0pt\leftmargin=\parindent
+    \refstepcounter{example}
+    \labelsep=0pt\small\bf\itshape\item[\theexamplename]}\mbox{}\par
+}{\vskip3pt\endlist}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\apprefix{}
+\newenvironment{appendix}[3]
+{
+  \clearpage
+  \chapter*{\mbox{}\hfillПриложение~#1\hfill\mbox{}}%
+  \vskip-10pt
+  {\centering
+    {\bf (#2)}\par
+    {\large\bf #3}\par
+  }
+  \def\@currentlabel{#1}
+  \def\apprefix{#1.}
+  \def\thechapter{#1}
+  \setcounter{table}{0}
+  \setcounter{section}{0}
+  \addcontentsline{toc}{chapter}{Приложение~#1~(#2)~#3}
+}
+{
+  \def\apprefix{}
+  \def\thechapter{\@arabic\c@chapter}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Locale %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addto\captionsrussian{%
+  \renewcommand{\figurename}{Рисунок}
+  \renewcommand\tablename{Таблица}
+  \renewcommand\contentsname{Содержание}
+  \renewcommand{\bibname}{Библиография}
+}
+
+\endinput
